@@ -2,10 +2,32 @@ import ReactDOM from "react-dom";
 import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import ReactModal from "react-modal";
+import "animate.css";
 
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: Helvetica, sans-serif;
+  }
+  
+  .modal {
+    max-width: 600px;
+    margin: 64px auto;
+    background-color: lightgray;
+    padding: 32px;
+    border-radius: 4px;
+
+    &:focus {
+        outline: none;
+    }
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.75);
   }
 `;
 
@@ -67,12 +89,32 @@ const App = () => {
       <Grid>
         {choices.map(choiceData => {
           return (
-            <Choice key={choiceData.id} {...choiceData} setChoice={setChoice} />
+            <Choice
+              key={choiceData.id}
+              {...choiceData}
+              setChoice={id => {
+                setChoice(id);
+                setModalOpen(true);
+              }}
+            />
           );
         })}
       </Grid>
-      <ReactModal isOpen={isModalOpen}>
-        <p>modal</p>
+      <ReactModal
+        isOpen={isModalOpen}
+        ariaHideApp={false}
+        onRequestClose={() => {
+          setModalOpen(false);
+        }}
+        shouldCloseOnOverlayClick={true}
+        className="modal animated slideInUp faster"
+        overlayClassName="modal-overlay"
+      >
+        <h1>modal</h1>
+        <p>{choice}</p>
+        <a href="" onClick={() => setModalOpen(false)}>
+          Close modal
+        </a>
       </ReactModal>
     </>
   );
