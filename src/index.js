@@ -15,6 +15,8 @@ const GlobalStyle = createGlobalStyle`
     background-color: lightgray;
     padding: 32px;
     border-radius: 4px;
+    padding-left: 64px;
+    padding-right: 64px;
 
     &:focus {
         outline: none;
@@ -40,7 +42,11 @@ const Grid = styled.main`
 const ChoiceContainer = styled.div`
   border-radius: 6px;
   background-color: ${({ color }) => color};
-  padding: 15px;
+  padding: 30px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Choice = ({ id, color, desc, setChoice }) => {
@@ -55,6 +61,25 @@ const Choice = ({ id, color, desc, setChoice }) => {
     </ChoiceContainer>
   );
 };
+
+const CloseModalButton = styled.button`
+  border-radius: 4px;
+  font-weight: bold;
+  background-color: lightgray;
+  color: red;
+  border: 2px solid red;
+  /* float: right; */
+  margin-left: auto;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const AlignRight = styled.div`
+  width: 100%;
+  text-align: right;
+`;
 
 const choices = [
   {
@@ -112,9 +137,11 @@ const App = () => {
       >
         <h1>modal</h1>
         <p>{choice}</p>
-        <a href="" onClick={() => setModalOpen(false)}>
-          Close modal
-        </a>
+        <AlignRight>
+          <CloseModalButton onClick={() => setModalOpen(false)}>
+            Close modal
+          </CloseModalButton>
+        </AlignRight>
       </ReactModal>
     </>
   );
