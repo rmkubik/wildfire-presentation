@@ -56,6 +56,13 @@ const GlobalStyle = createGlobalStyle`
     bottom: 0px;
     background-color: rgba(0, 0, 0, 0.75);
   }
+
+  .fadeToWhite {
+    transition-property: background-color;
+    transition-timing-function: ease-out;
+    background-color: white;
+    transition-duration: 1000ms;
+  }
 `;
 
 const Grid = styled.main`
@@ -90,6 +97,7 @@ const Choice = ({ color, desc, read, setChoice }) => {
   return (
     <ChoiceContainer
       bgColor={read ? "white" : color}
+      className={read ? "animated fadeToWhite" : ""}
       border={read ? "1px black solid" : "none"}
       onClick={() => {
         setChoice();
