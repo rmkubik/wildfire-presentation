@@ -4,6 +4,19 @@ import styled, { createGlobalStyle } from "styled-components";
 import ReactModal from "react-modal";
 import "animate.css";
 
+function updateItem(list, id, updates) {
+  const index = list.findIndex(item => item.id === id);
+
+  return [
+    ...list.slice(0, index),
+    {
+      ...list[index],
+      ...updates
+    },
+    ...list.slice(index + 1)
+  ];
+}
+
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: Helvetica, sans-serif;
@@ -41,23 +54,31 @@ const Grid = styled.main`
 
 const ChoiceContainer = styled.div`
   border-radius: 6px;
-  background-color: ${({ color }) => color};
+  background-color: ${({ bgColor }) => bgColor};
   padding: 30px;
+  border: ${({ border }) => border};
 
   &:hover {
     cursor: pointer;
   }
 `;
 
-const Choice = ({ id, color, desc, setChoice }) => {
+const ReadIndicator = styled.span`
+  color: limegreen;
+  font-weight: bold;
+`;
+
+const Choice = ({ id, color, desc, read, setChoice }) => {
   return (
     <ChoiceContainer
-      color={color}
+      bgColor={read ? "white" : color}
+      border={read ? "1px black solid" : "none"}
       onClick={() => {
         setChoice(id);
       }}
     >
-      {desc}
+      {read ? <ReadIndicator>✅ read</ReadIndicator> : ""}
+      <p>{desc}</p>
     </ChoiceContainer>
   );
 };
@@ -68,8 +89,10 @@ const CloseModalButton = styled.button`
   background-color: lightgray;
   color: red;
   border: 2px solid red;
-  /* float: right; */
   margin-left: auto;
+  padding: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
 
   &:hover {
     cursor: pointer;
@@ -85,40 +108,46 @@ const choices = [
   {
     id: "test",
     desc: "This is an option",
-    color: "lightgreen"
+    color: "lightgreen",
+    read: false
   },
   {
     id: "asdf",
     desc: "This is an option 2",
-    color: "#82E0AA"
+    color: "#82E0AA",
+    read: false
   },
   {
     id: "qwec",
     desc: "This is an option 3",
-    color: "lightgreen"
+    color: "lightgreen",
+    read: false
   },
   {
     id: "adqw",
     desc: "This is an option 4",
-    color: "#82E0AA"
+    color: "#82E0AA",
+    read: false
   }
 ];
 
 const App = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [choice, setChoice] = useState(null);
+  const [choiceList, setChoiceList] = useState(choices);
 
   return (
     <>
       <GlobalStyle />
       <Grid>
-        {choices.map(choiceData => {
+        {choiceList.map(choiceData => {
           return (
             <Choice
               key={choiceData.id}
               {...choiceData}
               setChoice={id => {
                 setChoice(id);
+                setChoiceList(updateItem(choiceList, id, { read: true }));
                 setModalOpen(true);
               }}
             />
