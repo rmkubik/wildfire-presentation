@@ -4,6 +4,8 @@ import styled, { createGlobalStyle } from "styled-components";
 import ReactModal from "react-modal";
 import "animate.css";
 
+import choices from "./choices";
+
 function updateItem(list, id, updates) {
   const index = list.findIndex(item => item.id === id);
 
@@ -36,6 +38,14 @@ const GlobalStyle = createGlobalStyle`
     &:focus {
         outline: none;
     }
+
+    ul {
+        font-size: 1.5rem;
+    }
+
+    li {
+        padding-bottom: 10px;
+    }
   }
 
   .modal-overlay {
@@ -49,9 +59,8 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Grid = styled.main`
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const ChoiceContainer = styled.div`
@@ -59,6 +68,9 @@ const ChoiceContainer = styled.div`
   background-color: ${({ bgColor }) => bgColor};
   padding: 30px;
   border: ${({ border }) => border};
+  font-size: 1.5rem;
+  margin: 10px;
+  width: 180px;
 
   &:hover {
     cursor: pointer;
@@ -74,13 +86,13 @@ const Title = styled.h1`
   margin-bottom: 24px;
 `;
 
-const Choice = ({ id, color, desc, read, setChoice }) => {
+const Choice = ({ color, desc, read, setChoice }) => {
   return (
     <ChoiceContainer
       bgColor={read ? "white" : color}
       border={read ? "1px black solid" : "none"}
       onClick={() => {
-        setChoice(id);
+        setChoice();
       }}
     >
       <p>{desc}</p>
@@ -110,33 +122,6 @@ const AlignRight = styled.div`
   text-align: right;
 `;
 
-const choices = [
-  {
-    id: "test",
-    desc: "This is an option",
-    color: "lightgreen",
-    read: false
-  },
-  {
-    id: "asdf",
-    desc: "This is an option 2",
-    color: "#82E0AA",
-    read: false
-  },
-  {
-    id: "qwec",
-    desc: "This is an option 3",
-    color: "lightgreen",
-    read: false
-  },
-  {
-    id: "adqw",
-    desc: "This is an option 4",
-    color: "#82E0AA",
-    read: false
-  }
-];
-
 const App = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [choice, setChoice] = useState(null);
@@ -152,9 +137,11 @@ const App = () => {
             <Choice
               key={choiceData.id}
               {...choiceData}
-              setChoice={id => {
-                setChoice(id);
-                setChoiceList(updateItem(choiceList, id, { read: true }));
+              setChoice={() => {
+                setChoice(choiceData);
+                setChoiceList(
+                  updateItem(choiceList, choiceData.id, { read: true })
+                );
                 setModalOpen(true);
               }}
             />
@@ -171,8 +158,8 @@ const App = () => {
         className="modal animated slideInUp faster"
         overlayClassName="modal-overlay"
       >
-        <h1>modal</h1>
-        <p>{choice}</p>
+        <h1>{choice && choice.desc}</h1>
+        {choice && (choice.content || choice.id)}
         <AlignRight>
           <CloseModalButton onClick={() => setModalOpen(false)}>
             Close modal
