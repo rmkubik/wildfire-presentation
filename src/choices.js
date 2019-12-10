@@ -13,7 +13,7 @@ export default [
         </li>
       </ul>
     ),
-    color: "lightgreen",
+    color: "#dcffcc",
     read: false
   },
   {
@@ -33,7 +33,7 @@ export default [
         <li>GIFs are great</li>
       </ul>
     ),
-    color: "#82E0AA",
+    color: "#9fdfcd",
     read: false
   },
   {
@@ -48,7 +48,7 @@ export default [
         <li>Retention: Mailing List, Discord, Map Editor, Content Udpates</li>
       </ul>
     ),
-    color: "lightgreen",
+    color: "#baabda",
     read: false
   },
   {
@@ -70,7 +70,7 @@ export default [
         <li>Remains to be seen on conversion in the end!</li>
       </ul>
     ),
-    color: "lightgreen",
+    color: "#d79abc",
     read: false
   },
   {
@@ -83,7 +83,7 @@ export default [
         <li>Harder to animate state transitions</li>
       </ul>
     ),
-    color: "#82E0AA",
+    color: "#dcffcc",
     read: false
   },
   {
@@ -118,7 +118,7 @@ export default [
         </li>
       </ul>
     ),
-    color: "lightgreen",
+    color: "#9fdfcd",
     read: false
   },
   {
@@ -137,7 +137,7 @@ export default [
         <li>Helps feel more professional</li>
       </ul>
     ),
-    color: "#82E0AA",
+    color: "#baabda",
     read: false
   },
   {
@@ -167,7 +167,7 @@ export default [
         </li>
       </ul>
     ),
-    color: "#82E0AA",
+    color: "#d79abc",
     read: false
   },
   {
@@ -181,7 +181,7 @@ export default [
         <li>Look for systems that create more content?</li>
       </ul>
     ),
-    color: "#82E0AA",
+    color: "#dcffcc",
     read: false
   },
   {
@@ -204,7 +204,7 @@ export default [
         </li>
       </ul>
     ),
-    color: "#82E0AA",
+    color: "#9fdfcd",
     read: false
   },
   {
@@ -243,7 +243,7 @@ export default [
         </li>
       </ul>
     ),
-    color: "#82E0AA",
+    color: "#baabda",
     read: false
   },
   {
@@ -288,6 +288,23 @@ export default [
         </li>
       </ul>
     ),
-    color: "#82E0AA"
+    color: "#d79abc"
+  },
+  {
+    id: "social-media-driven",
+    desc: "Social Media Driven Development",
+    content: (
+      <ul>
+        <li>Polish early and often</li>
+        <li>Optimize game for sharing during dev process</li>
+        <li>Don't linger with dev art</li>
+        <li>Record GIFs constantly</li>
+        <li>Save GIFs in a drive folder</li>
+        <li>Polish motivates you AND shares well</li>
+        <li>Prevents you from putting off "unimportant" polish work</li>
+        <li>Helps you optimize for sharing</li>
+      </ul>
+    ),
+    color: "#dcffcc"
   }
 ];
