@@ -190,7 +190,7 @@ const App = () => {
           overlayRef.current = node;
         }}
       >
-        ><h1>{choice && choice.desc}</h1>
+        <h1>{choice && choice.desc}</h1>
         {choice && (choice.content || choice.id)}
         <AlignRight>
           <CloseModalButton
