@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import ReactModal from "react-modal";
 import "animate.css";
@@ -64,6 +64,20 @@ const GlobalStyle = createGlobalStyle`
     transition-duration: 1000ms;
   }
 `;
+
+function useAnimatedExit(ref) {
+  const animate = animation => {
+    return new Promise(resolve => {
+      ref.current.addEventListener("animationend", () => {
+        resolve();
+      });
+      ref.current.classList.add("animated");
+      ref.current.classList.add(animation);
+    });
+  };
+
+  return animate;
+}
 
 const Grid = styled.main`
   display: flex;
@@ -134,6 +148,10 @@ const App = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [choice, setChoice] = useState(null);
   const [choiceList, setChoiceList] = useState(choices);
+  const modalRef = useRef(null);
+  const overlayRef = useRef(null);
+  const animateModalExit = useAnimatedExit(modalRef);
+  const animateOverlayExit = useAnimatedExit(overlayRef);
 
   return (
     <>
@@ -165,11 +183,23 @@ const App = () => {
         shouldCloseOnOverlayClick={true}
         className="modal animated slideInUp faster"
         overlayClassName="modal-overlay"
+        contentRef={node => {
+          modalRef.current = node;
+        }}
+        overlayRef={node => {
+          overlayRef.current = node;
+        }}
       >
-        <h1>{choice && choice.desc}</h1>
+        ><h1>{choice && choice.desc}</h1>
         {choice && (choice.content || choice.id)}
         <AlignRight>
-          <CloseModalButton onClick={() => setModalOpen(false)}>
+          <CloseModalButton
+            onClick={() => {
+              animateOverlayExit("fadeOut");
+              modalRef.current.classList.remove("slideInUp");
+              animateModalExit("fadeOutDown").then(() => setModalOpen(false));
+            }}
+          >
             Close modal
           </CloseModalButton>
         </AlignRight>
