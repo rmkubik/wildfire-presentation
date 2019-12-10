@@ -130,7 +130,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Title>Choose Your Own Presentation</Title>
+      <Title>Choose Your Own Presentation - Lessons from Wildfire Swap</Title>
       <Grid>
         {choiceList.map(choiceData => {
           return (
