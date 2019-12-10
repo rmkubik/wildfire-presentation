@@ -20,6 +20,8 @@ function updateItem(list, id, updates) {
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: Helvetica, sans-serif;
+    padding: 24px;
+    padding-top: 48px;
   }
   
   .modal {
@@ -68,6 +70,10 @@ const ReadIndicator = styled.span`
   font-weight: bold;
 `;
 
+const Title = styled.h1`
+  margin-bottom: 24px;
+`;
+
 const Choice = ({ id, color, desc, read, setChoice }) => {
   return (
     <ChoiceContainer
@@ -77,8 +83,8 @@ const Choice = ({ id, color, desc, read, setChoice }) => {
         setChoice(id);
       }}
     >
-      {read ? <ReadIndicator>✅ read</ReadIndicator> : ""}
       <p>{desc}</p>
+      {read ? <ReadIndicator>✅ Read</ReadIndicator> : ""}
     </ChoiceContainer>
   );
 };
@@ -139,6 +145,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
+      <Title>Choose Your Own Presentation</Title>
       <Grid>
         {choiceList.map(choiceData => {
           return (
